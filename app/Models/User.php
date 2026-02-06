@@ -48,11 +48,11 @@ class User extends Authenticatable
 
     public function isCandidate()
     {
-        $this->role === 'candidate';
+        return $this->role === 'candidate';
     }
 
     public function isRecruiter() 
     {
-        $this->role === 'recruiter';
+        return $this->role === 'recruiter';
     }
 }

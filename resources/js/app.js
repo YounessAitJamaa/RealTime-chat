@@ -8,12 +8,23 @@ Alpine.start();
 
 
 if(window.Echo) {
-    window.Echo.channel('demo-channel')
-    .listen('.demo.event', (e) => {
-        console.log('EVENT RECEIVED', e);
+    window.Echo.private('role.recruiter')
+        .listen('.role.message', (e) => {
+            console.log(e);
+            addMessage('[RECRUITER]' + e.message);
+    });
 
+    window.Echo.private('role.candidate')
+        .listen('.role.message', (e) => {
+            console.log(e);
+            addMessage('[CANDIDATE]' + e.message);
+        })
+}
+
+
+function addMessage(text) {
         const div = document.createElement('div');
-        div.innerText = e.message;
+        div.innerText = text;
         div.style.padding = '10px';
         div.style.background = '#e5ffe5';
         div.style.margin = '5px 0';
@@ -24,6 +35,4 @@ if(window.Echo) {
         {
             container.appendChild(div);
         }
-    });
-
 }

@@ -13,6 +13,12 @@
                 </div>
             </div>
 
+            <p>
+                Logged in as: <strong>{{ auth()->user()->email }}</strong><br>
+                Role: <strong>{{ auth()->user()->role }}</strong>
+            </p>
+
+
             <div id="realtime-messages" style="margin-top:20px;"></div>
 
         </div>
