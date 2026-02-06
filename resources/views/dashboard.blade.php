@@ -12,6 +12,9 @@
                     {{ __("You're logged in!") }}
                 </div>
             </div>
+
+            <div id="realtime-messages" style="margin-top:20px;"></div>
+
         </div>
     </div>
 </x-app-layout>
