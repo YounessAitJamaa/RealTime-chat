@@ -1,38 +1,33 @@
 import './bootstrap';
-
 import Alpine from 'alpinejs';
 
 window.Alpine = Alpine;
-
 Alpine.start();
 
+const userId = document.querySelector('meta[name="user-id"]')?.content;
 
-if(window.Echo) {
-    window.Echo.private('role.recruiter')
-        .listen('.role.message', (e) => {
-            console.log(e);
-            addMessage('[RECRUITER]' + e.message);
-    });
+if (userId && window.Echo) {
+    console.log(`Subscribing to private channel for user ${userId}`);
 
-    window.Echo.private('role.candidate')
-        .listen('.role.message', (e) => {
-            console.log(e);
-            addMessage('[CANDIDATE]' + e.message);
+    window.Echo.private(`chat.user.${userId}`)
+        .listen('.message.sent', (e) => {
+            addMessage(e.message.content);
         })
+        .error((error) => {
+            console.log('Error subscribing to private channel:', error);
+        });
 }
 
-
+// Function to add the new message to the UI
 function addMessage(text) {
-        const div = document.createElement('div');
-        div.innerText = text;
-        div.style.padding = '10px';
-        div.style.background = '#e5ffe5';
-        div.style.margin = '5px 0';
+    const container = document.getElementById('chat-messages');
+    if (!container) return;
 
-        const container = document.getElementById('realtime-messages');
+    const div = document.createElement('div');
+    div.innerText = text;
+    div.style.padding = '8px';
+    div.style.margin = '5px';
+    div.style.background = '#f1f1f1';
 
-        if(container) 
-        {
-            container.appendChild(div);
-        }
+    container.appendChild(div);
 }

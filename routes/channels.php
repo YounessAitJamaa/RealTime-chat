@@ -19,3 +19,9 @@ Broadcast::channel('role.candidate', function ($user) {
     return $user->isCandidate();
 });
 
+Broadcast::channel('chat.user.{id}', function ($user, $id) {
+    return (int) $user->id === (int) $id;
+});
+
+
+

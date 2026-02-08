@@ -18,6 +18,35 @@
                 Role: <strong>{{ auth()->user()->role }}</strong>
             </p>
 
+            <div id="chat-messages"></div>
+
+            <form id="chat-form">
+                <input type="hidden" id="receiver_id" value="2">
+                <input type="text" id="message-input" placeholder="Type message">
+                <button>Send</button>
+            </form>
+
+            <script>
+            document.getElementById('chat-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                await fetch('/messages', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    },
+                    body: JSON.stringify({
+                        receiver_id: document.getElementById('receiver_id').value,
+                        content: document.getElementById('message-input').value
+                    })
+                });
+
+                document.getElementById('message-input').value = '';
+            });
+            </script>
+
+
 
             <div id="realtime-messages" style="margin-top:20px;"></div>
 
